@@ -1,0 +1,23 @@
+﻿using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.CenterDto;
+using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
+using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
+
+namespace VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Service;
+
+public interface ICenterService
+{
+    /// <summary>
+    /// دریافت مرکز های فعال یک شهر
+    /// </summary>
+    /// <param name="cityId"></param>
+    /// <returns></returns>
+    Task<List<CenterResponseDto>> GetActiveCentersOfCityAsync(int cityId);
+
+    /// <summary>
+    /// بررسی اینکه مرکز میتواند تایم زمان دیگری داشته باشد یا نه
+    /// </summary>
+    /// <param name="centerId"></param>
+    /// <param name="timeSlotDate"></param>
+    /// <returns></returns>
+    Task<bool> CanAddTimeSlotForDayAsync(int centerId, DateTime timeSlotDate);
+}

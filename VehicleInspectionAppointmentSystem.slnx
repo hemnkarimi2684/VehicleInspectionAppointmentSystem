@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/01-Domain/">
+    <Project Path="VehicleInspectionAppointmentSystem.Domain/VehicleInspectionAppointmentSystem.Domain.csproj" />
+  </Folder>
+  <Folder Name="/02-Contracts/">
+    <Project Path="VehicleInspectionAppointmentSystem.Contracts/VehicleInspectionAppointmentSystem.Contracts.csproj" Id="a579a1da-c9b2-4cf9-8c67-7ec30842c658" />
+  </Folder>
+  <Folder Name="/03-Application/">
+    <Project Path="VehicleInspectionAppointmentSystem.Business/VehicleInspectionAppointmentSystem.Business.csproj" Id="ef5427b5-e075-4006-8f61-1cfbb3b8c7f2" />
+  </Folder>
+  <Folder Name="/04-Infrastructure/">
+    <Project Path="VehicleInspectionAppointmentSystem.Infrastructure/VehicleInspectionAppointmentSystem.Infrastructure.csproj" Id="3cbf05cd-770d-47c9-8a11-9a5e8601f2cd" />
+    <Project Path="VehicleInspectionAppointmentSystem.RepositoryLayer/VehicleInspectionAppointmentSystem.RepositoryLayer.csproj" Id="9d70ee3b-22ac-4092-ad45-0d6338d52bc4" />
+  </Folder>
+  <Folder Name="/05-Presentation/">
+    <Project Path="VehicleInspectionAppointmentSystem.WebApi/VehicleInspectionAppointmentSystem.WebApi.csproj" Id="1cfa8714-fe04-435e-b922-f76c540b2ad6" />
+  </Folder>
+</Solution>

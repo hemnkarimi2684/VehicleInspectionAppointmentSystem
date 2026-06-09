@@ -1,0 +1,6 @@
+@VehicleInspectionAppointmentSystem.WebApi_HostAddress = http://localhost:5023
+
+GET {{VehicleInspectionAppointmentSystem.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
