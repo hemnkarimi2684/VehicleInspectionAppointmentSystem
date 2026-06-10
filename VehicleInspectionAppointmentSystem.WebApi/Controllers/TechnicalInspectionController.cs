@@ -29,26 +29,26 @@ public class TechnicalInspectionController : ControllerBase
         return Created();
     }
 
-    //[HttpGet]
-    //public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
-    //{
-    //    return Ok(await _technicalInspectionService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
-    //}
-
-    //[HttpGet("vehicle/{vehicleId:int}")]
-    //public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetVehicleTechnicalInspectionAsync([FromRoute] int vehicleId)
-    //{
-    //    return Ok(await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId));
-    //}
-
     [HttpGet]
-    public async Task<IActionResult> GetAllTechnicalInspectionAsync(
-        [FromQuery] PaginationRequestDto paginationRequest,
-        [FromQuery] int? vehicleId)
+    public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
     {
-        if (vehicleId != null)
-            return Ok(await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId.Value));
-
         return Ok(await _technicalInspectionService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
     }
+
+    [HttpGet("vehicle/{vehicleId:int}")]
+    public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetVehicleTechnicalInspectionAsync([FromRoute] int vehicleId)
+    {
+        return Ok(await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId));
+    }
+
+    //[HttpGet]
+    //public async Task<IActionResult> GetAllTechnicalInspectionAsync(
+    //    [FromQuery] PaginationRequestDto paginationRequest,
+    //    [FromQuery] int? vehicleId)
+    //{
+    //    if (vehicleId != null)
+    //        return Ok(await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId.Value));
+
+    //    return Ok(await _technicalInspectionService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
+    //}
 }

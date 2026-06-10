@@ -28,23 +28,23 @@ public class AppointmentController : ControllerBase
         return Created();
     }
 
-    //[HttpGet("vehicle/{vehicleId:int}")]
-    //public async Task<ActionResult<List<AppointmentDetailsResponseDto>>> GetVehicleAppointmentsAsync([FromRoute] int vehicleId) => Ok(await _appointmentService.GetVehicleAppointmentsAsync(vehicleId));
-
-    //[HttpGet]
-    //public async Task<ActionResult<ActionResult<List<AppointmentDetailsResponseDto>>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
-    //{
-    //    return Ok(await _appointmentService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
-    //}
+    [HttpGet("vehicle/{vehicleId:int}")]
+    public async Task<ActionResult<List<AppointmentDetailsResponseDto>>> GetVehicleAppointmentsAsync([FromRoute] int vehicleId) => Ok(await _appointmentService.GetVehicleAppointmentsAsync(vehicleId));
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAppointmentAsync(
-           [FromQuery] PaginationRequestDto paginationRequest,
-           [FromQuery] int? vehicleId)
+    public async Task<ActionResult<ActionResult<List<AppointmentDetailsResponseDto>>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
     {
-        if (vehicleId != null)
-          return  Ok(await _appointmentService.GetVehicleAppointmentsAsync(vehicleId.Value));
-
         return Ok(await _appointmentService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
     }
+
+    //[HttpGet]
+    //public async Task<IActionResult> GetAllAppointmentAsync(
+    //       [FromQuery] PaginationRequestDto paginationRequest,
+    //       [FromQuery] int? vehicleId)
+    //{
+    //    if (vehicleId != null)
+    //      return  Ok(await _appointmentService.GetVehicleAppointmentsAsync(vehicleId.Value));
+
+    //    return Ok(await _appointmentService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
+    //}
 }

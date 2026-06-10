@@ -21,14 +21,14 @@ public class UserController : ControllerBase
     [HttpGet("by-username")]
     public async Task<ActionResult<UserResponseDto>> GetUserByUserNameAsync([FromQuery] string userName) => Ok(await _userService.GetUserByUserNameAsync(userName));
 
-    [HttpGet]
-    public async Task<IActionResult> GetByUserNameOrPhoneNumberAsync(
-          [FromQuery] string? userName,
-          [FromQuery] string? phoneNumber)
-    {
-        if(!string.IsNullOrWhiteSpace(userName))
-            return Ok(await _userService.GetUserByUserNameAsync(userName));
+    //[HttpGet]
+    //public async Task<IActionResult> GetByUserNameOrPhoneNumberAsync(
+    //      [FromQuery] string? userName,
+    //      [FromQuery] string? phoneNumber)
+    //{
+    //    if(!string.IsNullOrWhiteSpace(userName))
+    //        return Ok(await _userService.GetUserByUserNameAsync(userName));
 
-        return Ok(await _userService.GetUserByPhoneNumberAsync(phoneNumber));
-    }
+    //    return Ok(await _userService.GetUserByPhoneNumberAsync(phoneNumber));
+    //}
 }
