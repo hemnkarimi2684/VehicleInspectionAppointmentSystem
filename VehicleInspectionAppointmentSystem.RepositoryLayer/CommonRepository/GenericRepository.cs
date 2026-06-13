@@ -32,7 +32,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await query.AnyAsync(predicate);
     }
 
-    public async Task<List<TResult>> QueryAsync<TResult>(Expression<Func<T, TResult>> selector, int page = 1, int pageSize = 10, bool tracking = false)
+    public async Task<List<TResult>> QueryAsync<TResult>(
+            Expression<Func<T, TResult>> selector,
+            int page = 1, int pageSize = 10,
+            bool tracking = false)
     {
         page = page < 0 ? 1 : page;
         pageSize = pageSize < 0 ? 10 : pageSize;
@@ -43,10 +46,32 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             query = query.AsNoTracking();
 
         return await query
-                        .Skip((page - 1) * pageSize)
-                        .Take(pageSize)
-                        .OrderBy(b => b.Id)
-                        .Select(selector).ToListAsync();
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .OrderBy(b => b.Id)
+        .Select(selector).ToListAsync();
+    }
+
+    public async Task<List<TResult>> QueryAsync<TResult>(
+        Expression<Func<T, TResult>> selector,
+        Expression<Func<T, bool>> filter,
+        int page = 1, int pageSize = 10,
+        bool tracking = false)
+    {
+        page = page < 0 ? 1 : page;
+        pageSize = pageSize < 0 ? 10 : pageSize;
+
+        var query = Entities.AsQueryable();
+
+        if (!tracking)
+            query = query.AsNoTracking();
+
+        return await query
+        .Where(filter)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .OrderBy(b => b.Id)
+        .Select(selector).ToListAsync();
     }
 
     public async Task<T?> GetByIdAsync(int id, bool tracking = false)

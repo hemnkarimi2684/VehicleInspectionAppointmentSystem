@@ -12,7 +12,26 @@ public interface IGenericRepository<T> where T : BaseEntity
     /// <param name="selector"></param>
     /// <param name="tracking"></param>
     /// <returns></returns>
-    Task<List<TResult>> QueryAsync<TResult>(Expression<Func<T, TResult>> selector, int page = 1, int pageSize = 10, bool tracking = false);
+    Task<List<TResult>> QueryAsync<TResult>(
+        Expression<Func<T, TResult>> selector,
+        int page = 1, int pageSize = 10,
+        bool tracking = false);
+
+    /// <summary>
+    /// دریافت موجدیت ها با شرط خاص 
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="selector"></param>
+    /// <param name="filter"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="tracking"></param>
+    /// <returns></returns>
+    Task<List<TResult>> QueryAsync<TResult>(
+        Expression<Func<T, TResult>> selector,
+        Expression<Func<T, bool>> filter,
+        int page = 1, int pageSize = 10,
+        bool tracking = false);
 
     /// <summary>
     /// بررسی شرط برای همه موجودیت ها 
