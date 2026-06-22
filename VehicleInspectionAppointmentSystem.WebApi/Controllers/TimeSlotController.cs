@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.TimeSlotDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
+using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 

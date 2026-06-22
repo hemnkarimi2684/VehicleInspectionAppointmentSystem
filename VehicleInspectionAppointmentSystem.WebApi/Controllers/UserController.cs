@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.UserDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.UserBusiness;
+using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Dto;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 

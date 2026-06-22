@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.VehicleEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.VehicleEntity.Entity;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.VehicleEntity.Data;
@@ -19,7 +20,7 @@ public interface IVehicleRepository : IGenericRepository<Vehicle>
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetUserVehiclesAsync<TResult>(Expression<Func<Vehicle, TResult>> selector, int userId);
+    Task<List<VehicleResponseDto>> GetUserVehiclesAsync(int userId);
 
     /// <summary>
     /// بررسی اینکه ایا ماشین وجود دارد

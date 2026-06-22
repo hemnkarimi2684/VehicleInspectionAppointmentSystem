@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.RequestDto.AppointmentDto;
-using VehicleInspectionAppointmentSystem.Contracts.RequestDto.PaginationDto;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.AppointmentDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
+using VehicleInspectionAppointmentSystem.Business.RequestDto.AppointmentDto;
+using VehicleInspectionAppointmentSystem.Business.RequestDto.PaginationDto;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
+
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 

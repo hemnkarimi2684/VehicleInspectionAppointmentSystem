@@ -20,4 +20,8 @@
     <ProjectReference Include="..\VehicleInspectionAppointmentSystem.RepositoryLayer\VehicleInspectionAppointmentSystem.RepositoryLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>

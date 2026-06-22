@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
+﻿using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
-using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Enums;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Data;
 
@@ -42,5 +40,5 @@ public interface IAppointmentRepository : IGenericRepository<Appointment>
     /// </summary>
     /// <param name="vehicleId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetVehicleAppointmentsAsync<TResult>(Expression<Func<Appointment, TResult>> selector, int vehicleId);
+    Task<List<AppointmentDetailsResponseDto>> GetVehicleAppointmentsAsync(int vehicleId);
 }

@@ -48,7 +48,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await query
         .Skip((page - 1) * pageSize)
         .Take(pageSize)
-        .OrderBy(b => b.Id)
+        .OrderBy(b => b.CreatedAt)
         .Select(selector).ToListAsync();
     }
 
@@ -70,7 +70,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         .Where(filter)
         .Skip((page - 1) * pageSize)
         .Take(pageSize)
-        .OrderBy(b => b.Id)
+        .OrderBy(b => b.CreatedAt)
         .Select(selector).ToListAsync();
     }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.CenterDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.CenterBusiness;
+using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Dto;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 

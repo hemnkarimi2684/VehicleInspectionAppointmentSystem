@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Enums;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
@@ -14,12 +15,19 @@ public class TechnicalInspectionRepository : GenericRepository<TechnicalInspecti
     {
     }
 
-    public async Task<List<TResult>> GetVehicleTechnicalInspectionAsync<TResult>(Expression<Func<TechnicalInspection, TResult>> selector, int vehicleId)
+    public async Task<List<TechnicalInspectionResponseDto>> GetVehicleTechnicalInspectionAsync(int vehicleId)
     {
         return await Entities
                            .AsNoTracking()
                            .Where(ti => ti.VehicleId == vehicleId)
-                           .Select(selector)
+                           .Select(ti => new TechnicalInspectionResponseDto
+                           (
+                               ti.Description,
+                               ti.IssueDate,
+                               ti.ExpireDate,
+                               ti.VehiclePlate,
+                               ti.VehicleVin
+                           ))
                            .ToListAsync();
     }
 

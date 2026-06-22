@@ -2,9 +2,6 @@
   <Folder Name="/01-Domain/">
     <Project Path="VehicleInspectionAppointmentSystem.Domain/VehicleInspectionAppointmentSystem.Domain.csproj" />
   </Folder>
-  <Folder Name="/02-Contracts/">
-    <Project Path="VehicleInspectionAppointmentSystem.Contracts/VehicleInspectionAppointmentSystem.Contracts.csproj" Id="a579a1da-c9b2-4cf9-8c67-7ec30842c658" />
-  </Folder>
   <Folder Name="/03-Application/">
     <Project Path="VehicleInspectionAppointmentSystem.Business/VehicleInspectionAppointmentSystem.Business.csproj" Id="ef5427b5-e075-4006-8f61-1cfbb3b8c7f2" />
   </Folder>

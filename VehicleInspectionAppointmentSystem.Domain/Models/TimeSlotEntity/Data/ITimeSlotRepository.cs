@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Entity;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Data;
@@ -12,7 +13,7 @@ public interface ITimeSlotRepository : IGenericRepository<TimeSlot>
     /// </summary>
     /// <param name="centerId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetCenterAvailableTimeSlotsAsync<TResult>(Expression<Func<TimeSlot, TResult>> selector, int centerId);
+    Task<List<TimeSlotResponseDto>> GetCenterAvailableTimeSlotsAsync(int centerId);
 
     /// <summary>
     /// بررسی اینکه ایا بازه زمانی رزرو شده یا نه 
