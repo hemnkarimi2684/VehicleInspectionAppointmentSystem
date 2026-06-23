@@ -1,5 +1,6 @@
 using VehicleInspectionAppointmentSystem.Business.Extensions;
 using VehicleInspectionAppointmentSystem.RepositoryLayer.Extensions;
+using VehicleInspectionAppointmentSystem.WebApi.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddInfrastructureDependency(builder.Configuration);
 builder.Services.AddBusinessDependency();
+
+builder.Services.AddScoped<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

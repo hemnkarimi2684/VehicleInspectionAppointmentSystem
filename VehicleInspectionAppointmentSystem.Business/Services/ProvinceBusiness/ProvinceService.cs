@@ -1,4 +1,5 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Interfaces.ProvinceBusiness;
+﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.ProvinceBusiness;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Dto;
 
@@ -23,7 +24,7 @@ public class ProvinceService : IProvinceService
         ));
 
         if (provices == null || !provices.Any())
-            throw new ArgumentException("Dear user you dont have any provice in the system!");
+            throw new NotFoundException("Dear user you dont have any provice in the system!");
 
         return provices;
     }

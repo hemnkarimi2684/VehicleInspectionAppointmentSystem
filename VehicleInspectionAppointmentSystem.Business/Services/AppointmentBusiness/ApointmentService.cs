@@ -1,4 +1,5 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
+﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.VehicleBusiness;
 using VehicleInspectionAppointmentSystem.Business.RequestDto.AppointmentDto;
@@ -36,7 +37,7 @@ public class ApointmentService : IAppointmentService
         var hasActiveAppointment = await HasActiveAppointmentAsync(appointmentCreate.VehicleId);
 
         if (hasActiveAppointment)
-            throw new ArgumentException("Dear user you have appointment already with this vehicle!");
+            throw new ConflictException("Dear user you have appointment already with this vehicle!");
 
         //this must be chack after learning authentication add this method 
         //await _vehicleService.IsCarOwnedByUserAsync(appointmentCreate.vehicleId,appointmentCrea)
@@ -44,19 +45,20 @@ public class ApointmentService : IAppointmentService
         await _timeSlotService.CheckTimeSlotIsReservedAsync(appointmentCreate.TimeSlotId);
 
         if (!Enum.TryParse<Status>(appointmentCreate.Status, true, out var appointmentStatus))
-            throw new InvalidOperationException("something went wrong with parse of status enum");
+            throw new ValidationException("something went wrong with parse of status enum");
 
         if (!Enum.TryParse<PaymentType>(appointmentCreate.PaymentType, true, out var appointmentPaymentType))
-            throw new InvalidOperationException("something went wrong with parse of payment type enum");
+            throw new ValidationException("something went wrong with parse of payment type enum");
 
         var newAppointment = new Appointment(appointmentStatus, appointmentCreate.Amount, appointmentPaymentType, appointmentCreate.VehicleId, appointmentCreate.TimeSlotId);
 
         var result = await _appointmentRepository.AddAsync(newAppointment);
 
         if (!result)
-            throw new ArgumentException("something went wrong in add appointment please try later!");
+            throw new ValidationException("something went wrong in add appointment please try later!");
 
         await _timeSlotService.UpdateAppointmentReservedStatusAsync(newAppointment.TimeSlotId, true);
+
         return true;
     }
 
@@ -75,7 +77,7 @@ public class ApointmentService : IAppointmentService
         ), page, pageSize);
 
         if (appointments == null || !appointments.Any())
-            throw new ArgumentException("We do not have any appointments");
+            throw new NotFoundException("We do not have any appointments");
 
         return appointments;
     }
@@ -85,7 +87,7 @@ public class ApointmentService : IAppointmentService
         var vehiclAppointments = await _appointmentRepository.GetVehicleAppointmentsAsync(vehicleId);
 
         if (vehiclAppointments == null || !vehiclAppointments.Any())
-            throw new ArgumentException("We do not have any appointments for this vehicle");
+            throw new NotFoundException("We do not have any appointments for this vehicle");
 
         return vehiclAppointments;
     }
@@ -97,7 +99,7 @@ public class ApointmentService : IAppointmentService
         var hasActiveAppointmentAtTime = await _appointmentRepository.HasActiveAppointmentAtTimeAsync(vehicleId, timeSlotId);
 
         if (hasActiveAppointmentAtTime)
-            throw new ArgumentException("Dear user you have appointment at time already with this vehicle!");
+            throw new ConflictException("Dear user you have appointment at time already with this vehicle!");
 
         return hasActiveAppointmentAtTime;
     }
@@ -107,7 +109,7 @@ public class ApointmentService : IAppointmentService
         var hasActiveAppointmentBelongToVehicle = await _appointmentRepository.HasActiveAppointmentBelongToVehicleAsync(vehicleId, appointmentId);
 
         if (!hasActiveAppointmentBelongToVehicle)
-            throw new ArgumentException("this appointment not blong to this vehicle or not found or not active");
+            throw new ForbiddenException("this appointment not blong to this vehicle or not found or not active");
 
         return hasActiveAppointmentBelongToVehicle;
     }

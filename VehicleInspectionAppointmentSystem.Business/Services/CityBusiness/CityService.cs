@@ -1,4 +1,5 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Interfaces.CityBusiness;
+﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.CityBusiness;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Dto;
 
@@ -18,7 +19,7 @@ public class CityService : ICityService
         var availableProvinceCities = await _cityRepository.GetCitiesByProvinceIdAsync(provinceId);
 
         if (availableProvinceCities == null || !availableProvinceCities.Any())
-            throw new ArgumentException("We do not have any available cities in this province");
+            throw new NotFoundException("We do not have any available cities in this province");
 
         return availableProvinceCities;
     }

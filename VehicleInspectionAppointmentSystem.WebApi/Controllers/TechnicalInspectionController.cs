@@ -2,7 +2,10 @@
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TechnicalInspectionBusiness;
 using VehicleInspectionAppointmentSystem.Business.RequestDto.PaginationDto;
 using VehicleInspectionAppointmentSystem.Business.RequestDto.TechnicalInspectionDto;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Dto;
+using VehicleInspectionAppointmentSystem.WebApi.Filters;
+using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 
@@ -18,26 +21,28 @@ public class TechnicalInspectionController : ControllerBase
     }
 
     [HttpPost]
+    [RequestModelValidationFilter]
     public async Task<IActionResult> RegisterTechnicalInspection([FromBody] TechnicalInspectionCreateRequestDto technicalInspectionCreateDto)
     {
-        var result = await _technicalInspectionService.CraeteTechnicalInspectionAsync(technicalInspectionCreateDto);
+        await _technicalInspectionService.CraeteTechnicalInspectionAsync(technicalInspectionCreateDto);
 
-        if (!result)
-            return BadRequest("Somthing went wrong when register the technical inspection plaese try again!");
-
-        return Created();
+        return Ok(Result.Success());
     }
 
     [HttpGet]
     public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
     {
-        return Ok(await _technicalInspectionService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
+        var technicalInspections = await _technicalInspectionService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize);
+
+        return Ok(Result<List<TechnicalInspectionResponseDto>>.Success(technicalInspections));
     }
 
     [HttpGet("vehicle/{vehicleId:int}")]
     public async Task<ActionResult<List<TechnicalInspectionResponseDto>>> GetVehicleTechnicalInspectionAsync([FromRoute] int vehicleId)
     {
-        return Ok(await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId));
+        var vehcileTechnicalInspections = await _technicalInspectionService.GetVehicleTechnicalInspectionAsync(vehicleId);
+
+        return Ok(Result<List<TechnicalInspectionResponseDto>>.Success(vehcileTechnicalInspections));
     }
 
     //[HttpGet]

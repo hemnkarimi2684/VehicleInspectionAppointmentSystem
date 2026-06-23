@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
+using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 
@@ -16,5 +18,10 @@ public class TimeSlotController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<TimeSlotResponseDto>>> GetCenterAvailableTimeSlotsAsync([FromQuery] int centerId) => Ok(await _timeSlotService.GetCenterAvailableTimeSlotsAsync(centerId));
+    public async Task<ActionResult<List<TimeSlotResponseDto>>> GetCenterAvailableTimeSlotsAsync([FromQuery] int centerId)
+    {
+        var centerTimeSlots = await _timeSlotService.GetCenterAvailableTimeSlotsAsync(centerId);
+
+        return Ok(Result<List<TimeSlotResponseDto>>.Success(centerTimeSlots));
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
+using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
 
 namespace VehicleInspectionAppointmentSystem.Business.Services.TimeSlotBusiness;
 
@@ -28,7 +29,7 @@ public class TimeSlotService : ITimeSlotService
         var centerAvailableTimeSlots = await _timeSlotRepository.GetCenterAvailableTimeSlotsAsync(centerId);
 
         if (centerAvailableTimeSlots == null || !centerAvailableTimeSlots.Any())
-            throw new ArgumentException("Our center is currently unable to serve you");
+            throw new NotFoundException("Our center is currently unable to serve you");
 
         return centerAvailableTimeSlots;
     }
@@ -38,7 +39,7 @@ public class TimeSlotService : ITimeSlotService
         var isExistTimeSlot = await _timeSlotRepository.IsExistTimeSlotAsync(timeSlotId);
 
         if (!isExistTimeSlot)
-            throw new InvalidOperationException("this timeSlot id not exist in the system!");
+            throw new NotFoundException("this timeSlot id not exist in the system!");
 
         return isExistTimeSlot;
     }
@@ -48,7 +49,7 @@ public class TimeSlotService : ITimeSlotService
         var result = await _timeSlotRepository.UpdateAppointmentReservedStatusAsync(timeSlotId, isReserved);
 
         if (!result)
-            throw new InvalidOperationException($"the time slot with this {timeSlotId} not found or something went wrong with save changes");
+            throw new ValidationException($"the time slot with this {timeSlotId} not found or something went wrong with save changes");
 
         return result;
     }

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Entity;
-using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Exceptions;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
 
@@ -49,42 +50,42 @@ public class Center : BaseEntity
     protected override void Validate()
     {
         if (CenterCode < 1)
-            throw new InvalidOperationException("invalid CenterCode!");
+            throw new DomainException(DomainErrors.InvalidCenterCodeRange);
 
         if (string.IsNullOrWhiteSpace(Name))
-            throw new ArgumentNullException("the center name cannot be null");
+            throw new DomainException(DomainErrors.CenterNameIsRequired);
 
         if (Name.Length < 2 || Name.Length > 150)
-            throw new InvalidOperationException("the center name length cannot be less than 2 or higher than 150");
+            throw new DomainException(DomainErrors.InvalidCenterNameLength);
 
         if (string.IsNullOrWhiteSpace(Address))
-            throw new ArgumentNullException("the Address cannot be null");
+            throw new DomainException(DomainErrors.CenterAddressIsRequired);
 
         if (Address.Length < 2 || Address.Length > 200)
-            throw new InvalidOperationException("the Address length cannot be less than 2 or higher than 200");
+            throw new DomainException(DomainErrors.InvalidCenterAddressLength);
 
         if (DailyMaxCapacity < 0 || DailyMaxCapacity > 20)
-            throw new InvalidOperationException("invalid DailyMaxCapacity! the DailyMaxCapacity cannot be less than 0 and higher than 20");
+            throw new DomainException(DomainErrors.InvalidDailyMaxCapacityRange);
 
         if (!string.IsNullOrWhiteSpace(ManagerName) && ManagerName.Length < 2 || ManagerName.Length > 120)
-            throw new InvalidOperationException("the center name length cannot be less than 2 or higher than 120");
+            throw new DomainException(DomainErrors.InvalidCenterManagerNameLength);
 
         ValidatePhoneNumber();
 
         if (CityId < 1)
-            throw new InvalidOperationException("invalid CityId!");
+            throw new DomainException(DomainErrors.InvalidCenterCityIdRange);
     }
 
     private void ValidatePhoneNumber()
     {
         if (string.IsNullOrWhiteSpace(PhoneNumber))
-            throw new ArgumentNullException("your phone number cannot be null or empty");
+            throw new DomainException(DomainErrors.CenterPhoneNumberIsRequired);
 
         if (PhoneNumber.Length != 11)
-            throw new InvalidPhoneNumberLengthException();
+            throw new DomainException(DomainErrors.InvalidCenterPhoneNumberLength);
 
         if (!PhoneNumber.All(char.IsDigit))
-            throw new InvalidPhoneNumberException();
+            throw new DomainException(DomainErrors.CenterPhoneNumberIsDigit);
     }
 
     private void FixPhoneNumberFormat()
