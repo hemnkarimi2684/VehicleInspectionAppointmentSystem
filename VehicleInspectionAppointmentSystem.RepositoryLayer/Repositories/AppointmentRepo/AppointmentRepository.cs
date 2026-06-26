@@ -4,7 +4,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.AppointmentRepo;
 

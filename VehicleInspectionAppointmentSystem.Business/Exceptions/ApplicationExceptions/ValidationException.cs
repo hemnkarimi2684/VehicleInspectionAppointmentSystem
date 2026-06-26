@@ -5,7 +5,7 @@ namespace VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExce
 
 public class ValidationException : AppException
 {
-    public ValidationException(string message, Exception? innerException = null) : base(message, "400", innerException)
+    public ValidationException(string message, Exception? innerException = null) : base(message, "BADREQUEST", innerException)
     {
     }
 

@@ -4,7 +4,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
 
-namespace VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
@@ -22,7 +22,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         await Entities.AddAsync(entity);
 
-        return await DbContext.SaveChangesAsync() > 0;
+        return DbContext.Entry(entity).State == EntityState.Added;
     }
 
     public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
@@ -93,15 +93,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
         entity.Delete();
 
-        return await DbContext.SaveChangesAsync() > 0;
+        return DbContext.Entry(entity).State == EntityState.Modified;
     }
 
-    public async Task<bool> UpdateAsync(T entity)
+    public bool Update(T entity)
     {
         entity.Update();
 
         Entities.Update(entity);
 
-        return await DbContext.SaveChangesAsync() > 0;
+        return DbContext.Entry(entity).State == EntityState.Modified;
     }
 }

@@ -2,7 +2,7 @@
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.ProvinceRepo;
 

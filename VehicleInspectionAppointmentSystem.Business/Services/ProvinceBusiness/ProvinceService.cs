@@ -1,22 +1,22 @@
 ﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.ProvinceBusiness;
-using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Dto;
 
 namespace VehicleInspectionAppointmentSystem.Business.Services.ProvinceBusiness;
 
-public class ProvinceService : IProvinceService 
+public class ProvinceService : IProvinceService
 {
-    private readonly IProvinceRepository _provinceRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ProvinceService(IProvinceRepository provinceRepository)
+    public ProvinceService(IUnitOfWork unitOfWork)
     {
-        _provinceRepository = provinceRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<ProvinceResponseDto>> GetAllProvinceAsync()
     {
-        var provices = await _provinceRepository.QueryAsync(p => new ProvinceResponseDto
+        var provices = await _unitOfWork.ProvinceRepository.QueryAsync(p => new ProvinceResponseDto
         (
             p.Id,
             p.Name,

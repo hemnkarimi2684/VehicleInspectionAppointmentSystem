@@ -3,7 +3,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.CenterRepo;
 

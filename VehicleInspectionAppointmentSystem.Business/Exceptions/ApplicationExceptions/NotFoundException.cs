@@ -5,7 +5,7 @@ namespace VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExce
 
 public class NotFoundException : AppException
 {
-    public NotFoundException(string message, Exception? innerException = null) : base(message, "404", innerException)
+    public NotFoundException(string message, Exception? innerException = null) : base(message, "NOTFOUND", innerException)
     {
     }
 

@@ -4,7 +4,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.CityRepo;
 

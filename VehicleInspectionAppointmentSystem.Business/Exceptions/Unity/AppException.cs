@@ -5,7 +5,7 @@ namespace VehicleInspectionAppointmentSystem.Business.Exceptions.Unity;
 
 public abstract class AppException : BaseException
 {
-    public AppException(string message, string statusCode, Exception innerException) : base(message, statusCode, innerException)
+    public AppException(string message, string statusCode, Exception innerException) : base(message, $"BusinessException_{statusCode}", innerException)
     {
     }
 

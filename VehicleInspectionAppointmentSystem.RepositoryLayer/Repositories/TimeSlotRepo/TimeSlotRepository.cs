@@ -3,7 +3,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.TimeSlotRepo;
 

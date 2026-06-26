@@ -5,7 +5,7 @@ namespace VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExce
 
 public class ForbiddenException : AppException
 {
-    public ForbiddenException(string message, Exception? innerException = null) : base(message, "403", innerException)
+    public ForbiddenException(string message, Exception? innerException = null) : base(message, "FORIBIDDEN", innerException)
     {
     }
 

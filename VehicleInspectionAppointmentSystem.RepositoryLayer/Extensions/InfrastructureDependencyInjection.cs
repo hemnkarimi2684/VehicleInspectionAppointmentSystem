@@ -4,12 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.VehicleEntity.Data;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 using VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.AppointmentRepo;
 using VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.CenterRepo;
 using VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.CityRepo;
@@ -36,6 +38,7 @@ public static class InfrastructureDependencyInjection
         services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<ITechnicalInspectionRepository, TechnicalInspectionRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

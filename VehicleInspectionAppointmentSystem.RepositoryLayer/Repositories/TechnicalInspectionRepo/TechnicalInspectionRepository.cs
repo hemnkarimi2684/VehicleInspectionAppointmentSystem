@@ -5,7 +5,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Enums;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.TechnicalInspectionRepo;
 

@@ -5,7 +5,7 @@ namespace VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExce
 
 public class ConflictException : AppException
 {
-    public ConflictException(string message, Exception? innerException = null) : base(message, "409", innerException)
+    public ConflictException(string message, Exception? innerException = null) : base(message, "CONFLICT", innerException)
     {
     }
 

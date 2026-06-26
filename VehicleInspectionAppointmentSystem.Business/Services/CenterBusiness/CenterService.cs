@@ -1,22 +1,22 @@
 ﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.CenterBusiness;
-using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Dto;
+using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 
 namespace VehicleInspectionAppointmentSystem.Business.Services.CenterBusiness;
 
 public class CenterService : ICenterService
 {
-    private readonly ICenterRepository _centerRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CenterService(ICenterRepository centerRepository)
+    public CenterService(IUnitOfWork unitOfWork)
     {
-        _centerRepository = centerRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> CanAddTimeSlotForDayAsync(int centerId, DateTime timeSlotDate)
     {
-        var result = await _centerRepository.CanAddTimeSlotForDayAsync(centerId, timeSlotDate);
+        var result = await _unitOfWork.CenterRepository.CanAddTimeSlotForDayAsync(centerId, timeSlotDate);
 
         if (!result)
             throw new ConflictException("Today's capacity of this technical examination is full");
@@ -26,7 +26,7 @@ public class CenterService : ICenterService
 
     public async Task<List<CenterResponseDto>> GetActiveCentersOfCityAsync(int cityId)
     {
-        var availableCityCenters = await _centerRepository.GetActiveCentersOfCityAsync(cityId);
+        var availableCityCenters = await _unitOfWork.CenterRepository.GetActiveCentersOfCityAsync(cityId);
 
         if (availableCityCenters == null || !availableCityCenters.Any())
             throw new NotFoundException("We do not have any available centers in this city");

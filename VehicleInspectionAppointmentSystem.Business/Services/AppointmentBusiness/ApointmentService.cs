@@ -7,26 +7,27 @@ using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
+using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 
 
 namespace VehicleInspectionAppointmentSystem.Business.Services.AppointmentBusiness;
 
 public class ApointmentService : IAppointmentService
 {
-    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     private readonly ITimeSlotService _timeSlotService;
 
     private readonly IVehicleService _vehicleService;
 
-    public ApointmentService(IAppointmentRepository appointmentRepository, ITimeSlotService timeSlotService, IVehicleService vehicleService)
+    public ApointmentService(IUnitOfWork unitOfWork, ITimeSlotService timeSlotService, IVehicleService vehicleService)
     {
-        _appointmentRepository = appointmentRepository;
+        _unitOfWork = unitOfWork;
         _timeSlotService = timeSlotService;
         _vehicleService = vehicleService;
     }
 
-    public async Task<bool> CheckAppointmentStatusIsDoneAsync(int appointmentId) => await _appointmentRepository.CheckAppointmentStatusIsDoneAsync(appointmentId);
+    public async Task<bool> CheckAppointmentStatusIsDoneAsync(int appointmentId) => await _unitOfWork.AppointmentRepository.CheckAppointmentStatusIsDoneAsync(appointmentId);
 
     public async Task<bool> CreateAppointmentAsync(AppointmentCreateRequestDto appointmentCreate)
     {
@@ -52,19 +53,19 @@ public class ApointmentService : IAppointmentService
 
         var newAppointment = new Appointment(appointmentStatus, appointmentCreate.Amount, appointmentPaymentType, appointmentCreate.VehicleId, appointmentCreate.TimeSlotId);
 
-        var result = await _appointmentRepository.AddAsync(newAppointment);
+        var result = await _unitOfWork.AppointmentRepository.AddAsync(newAppointment);
 
         if (!result)
             throw new ValidationException("something went wrong in add appointment please try later!");
 
         await _timeSlotService.UpdateAppointmentReservedStatusAsync(newAppointment.TimeSlotId, true);
 
-        return true;
+        return await _unitOfWork.SaveChangesAsync() > 0;
     }
 
     public async Task<List<AppointmentDetailsResponseDto>> GetAllWithPaginationAsync(int page, int pageSize)
     {
-        var appointments = await _appointmentRepository.QueryAsync(a => new AppointmentDetailsResponseDto
+        var appointments = await _unitOfWork.AppointmentRepository.QueryAsync(a => new AppointmentDetailsResponseDto
         (
             a.Id,
             a.Status.ToString(),
@@ -84,7 +85,7 @@ public class ApointmentService : IAppointmentService
 
     public async Task<List<AppointmentDetailsResponseDto>> GetVehicleAppointmentsAsync(int vehicleId)
     {
-        var vehiclAppointments = await _appointmentRepository.GetVehicleAppointmentsAsync(vehicleId);
+        var vehiclAppointments = await _unitOfWork.AppointmentRepository.GetVehicleAppointmentsAsync(vehicleId);
 
         if (vehiclAppointments == null || !vehiclAppointments.Any())
             throw new NotFoundException("We do not have any appointments for this vehicle");
@@ -92,11 +93,11 @@ public class ApointmentService : IAppointmentService
         return vehiclAppointments;
     }
 
-    public async Task<bool> HasActiveAppointmentAsync(int vehicleId) => await _appointmentRepository.HasActiveAppointmentAsync(vehicleId);
+    public async Task<bool> HasActiveAppointmentAsync(int vehicleId) => await _unitOfWork.AppointmentRepository.HasActiveAppointmentAsync(vehicleId);
 
     public async Task<bool> HasActiveAppointmentAtTimeAsync(int vehicleId, int timeSlotId)
     {
-        var hasActiveAppointmentAtTime = await _appointmentRepository.HasActiveAppointmentAtTimeAsync(vehicleId, timeSlotId);
+        var hasActiveAppointmentAtTime = await _unitOfWork.AppointmentRepository.HasActiveAppointmentAtTimeAsync(vehicleId, timeSlotId);
 
         if (hasActiveAppointmentAtTime)
             throw new ConflictException("Dear user you have appointment at time already with this vehicle!");
@@ -106,7 +107,7 @@ public class ApointmentService : IAppointmentService
 
     public async Task<bool> HasActiveAppointmentBelongToVehicleAsync(int vehicleId, int appointmentId)
     {
-        var hasActiveAppointmentBelongToVehicle = await _appointmentRepository.HasActiveAppointmentBelongToVehicleAsync(vehicleId, appointmentId);
+        var hasActiveAppointmentBelongToVehicle = await _unitOfWork.AppointmentRepository.HasActiveAppointmentBelongToVehicleAsync(vehicleId, appointmentId);
 
         if (!hasActiveAppointmentBelongToVehicle)
             throw new ForbiddenException("this appointment not blong to this vehicle or not found or not active");

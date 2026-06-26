@@ -45,7 +45,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<T?> GetByIdAsync(int id, bool tracking = false);   
+    Task<T?> GetByIdAsync(int id, bool tracking = false);
 
     /// <summary>
     /// اضافه کردن موجودیت 
@@ -59,7 +59,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    Task<bool> UpdateAsync(T entity);
+    bool Update(T entity);
 
     /// <summary>
     /// حذف نرم موجودیت 
