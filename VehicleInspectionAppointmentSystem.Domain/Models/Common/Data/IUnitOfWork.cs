@@ -10,7 +10,7 @@ using VehicleInspectionAppointmentSystem.Domain.Models.VehicleEntity.Data;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
     IGenericRepository<T> GetRepository<T>() where T : BaseEntity;
 

@@ -56,6 +56,11 @@ public class UnitOfWork : IUnitOfWork
 
     public IVehicleRepository VehicleRepository { get; }
 
+    public void Dispose()
+    {
+        _context.Dispose();
+    }
+
     public IGenericRepository<T> GetRepository<T>() where T : BaseEntity
     {
         var type = typeof(T);
