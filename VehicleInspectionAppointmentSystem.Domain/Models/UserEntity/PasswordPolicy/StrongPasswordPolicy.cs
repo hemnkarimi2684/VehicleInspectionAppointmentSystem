@@ -1,4 +1,5 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.PasswordPolicy.PasswordExceptions;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.PasswordPolicy.PasswordExceptions;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.PasswordPolicy;
 
@@ -15,16 +16,16 @@ public static class StrongPasswordPolicy
             throw new PasswordTooShortExcption();
 
         if (userName.Equals(password, StringComparison.InvariantCultureIgnoreCase))
-            throw new ArgumentException("the password cannot be equals with userName");
+            throw new DomainException(DomainErrors.PasswordCannotEqualsWithUserName);
 
         if (!password.Any(char.IsUpper))
-            throw new PasswordCaseExcption("the password must have one upperCase letter");
+            throw new DomainException(DomainErrors.PasswordDontHaveAtLeastUpperCaseLetter);
 
         if (!password.Any(char.IsLower))
-            throw new PasswordCaseExcption("the password must have one LowerCase letter");
+            throw new DomainException(DomainErrors.PasswordDontHaveAtLeastLowerCaseLetter);
 
         if (!password.Any(char.IsDigit))
-            throw new PasswordMissingDigitException("the password must have one digit at least");
+            throw new DomainException(DomainErrors.PasswordDontHaveAtLeastOneDigit);
 
         bool hasSymbol = false;
 
@@ -35,6 +36,6 @@ public static class StrongPasswordPolicy
         }
 
         if (!hasSymbol)
-            throw new PasswordSymbolException("the password must have one symbol at least");
+            throw new DomainException(DomainErrors.PasswordDontHaveAtLeastOneSymbol);
     }
 }

@@ -1,7 +1,7 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.Unity;
+﻿using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.Unity;
 using VehicleInspectionAppointmentSystem.Domain.Common.ErrorModel;
 
-namespace VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+namespace VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 
 public class NotFoundException : AppException
 {

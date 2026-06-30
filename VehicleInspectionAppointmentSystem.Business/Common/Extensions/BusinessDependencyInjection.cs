@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.CacheBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.CenterBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.CityBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.ProvinceBusiness;
@@ -8,6 +9,7 @@ using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.UserBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.VehicleBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.AppointmentBusiness;
+using VehicleInspectionAppointmentSystem.Business.Services.CacheBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.CenterBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.CityBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.ProvinceBusiness;
@@ -16,7 +18,7 @@ using VehicleInspectionAppointmentSystem.Business.Services.TimeSlotBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.UserBusiness;
 using VehicleInspectionAppointmentSystem.Business.Services.VehicleBusiness;
 
-namespace VehicleInspectionAppointmentSystem.Business.Extensions;
+namespace VehicleInspectionAppointmentSystem.Business.Common.Extensions;
 
 public static class BusinessDependencyInjection
 {
@@ -31,6 +33,7 @@ public static class BusinessDependencyInjection
         services.AddScoped<ITimeSlotService, TimeSlotService>();
         services.AddScoped<IAppointmentService, ApointmentService>();
         services.AddScoped<ITechnicalInspectionService, TechnicalInspectionService>();
+        services.AddSingleton<IRedisService, RedisService>();
 
         return services;
     }

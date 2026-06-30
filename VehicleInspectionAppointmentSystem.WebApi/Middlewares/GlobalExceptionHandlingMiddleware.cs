@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
-using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Domain.Common.ErrorModel;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
 using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Middlewares;
@@ -35,6 +36,10 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
             case ValidationException validationException:
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(GenerateResponseBody(validationException.Message, validationException.StatusCode));
+                break;
+            case DomainException domainException:
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsync(GenerateResponseBody(domainException.Message, domainException.StatusCode));
                 break;
             case ForbiddenException forbiddenException:
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System.ComponentModel.DataAnnotations;
+using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Filters;
 
@@ -13,7 +13,7 @@ public class RequestModelValidationFilter : ActionFilterAttribute
                                       .SelectMany(v => v.Errors)
                                       .Select(e => e.ErrorMessage);
 
-            throw new VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions.ValidationException(string.Join(", ", errors));
+            throw new ValidationException(string.Join(", ", errors));
         }
     }
 }

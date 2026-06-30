@@ -1,7 +1,7 @@
 ﻿using VehicleInspectionAppointmentSystem.Domain.Common.ErrorModel;
 using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.Unity;
 
-namespace VehicleInspectionAppointmentSystem.Business.Exceptions.Unity;
+namespace VehicleInspectionAppointmentSystem.Business.Common.Exceptions.Unity;
 
 public abstract class AppException : BaseException
 {

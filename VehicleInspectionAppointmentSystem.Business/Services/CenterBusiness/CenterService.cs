@@ -1,4 +1,4 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+﻿using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.CenterBusiness;
 using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;

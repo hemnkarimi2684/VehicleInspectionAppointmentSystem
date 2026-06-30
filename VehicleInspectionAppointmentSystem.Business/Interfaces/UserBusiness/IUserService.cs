@@ -1,4 +1,5 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Dto;
+﻿using VehicleInspectionAppointmentSystem.Business.RequestDto.UserDto;
+using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Dto;
 
 namespace VehicleInspectionAppointmentSystem.Business.Interfaces.UserBusiness;
 
@@ -46,5 +47,19 @@ public interface IUserService
     /// <param name="userName"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    Task<bool> UpdateCredentialsAsync(int userId, string userName, string password);
+    Task<bool> UpdateCredentialsAsync(int userId, UpdateUserRequestDto updateUserRequest);
+
+    /// <summary>
+    /// ثبت نام کاربر با شماره تلفن 
+    /// </summary>
+    /// <param name="createUserRequest"></param>
+    /// <returns></returns>
+    Task<bool> RegisterAsync(CreateUserRequestDto createUserRequest);
+
+    /// <summary>
+    /// لاگین کاربر در سیستم 
+    /// </summary>
+    /// <param name="loginUserRequestDto"></param>
+    /// <returns></returns>
+    Task<bool> LoginAsync(LoginUserRequestDto loginUserRequestDto);
 }

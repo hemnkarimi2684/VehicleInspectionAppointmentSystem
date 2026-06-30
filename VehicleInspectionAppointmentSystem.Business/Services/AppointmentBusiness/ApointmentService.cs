@@ -1,9 +1,8 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+﻿using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TimeSlotBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.VehicleBusiness;
 using VehicleInspectionAppointmentSystem.Business.RequestDto.AppointmentDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;

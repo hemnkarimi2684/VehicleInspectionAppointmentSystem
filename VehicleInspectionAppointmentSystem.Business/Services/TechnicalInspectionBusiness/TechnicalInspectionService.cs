@@ -1,4 +1,4 @@
-﻿using VehicleInspectionAppointmentSystem.Business.Exceptions.ApplicationExceptions;
+﻿using VehicleInspectionAppointmentSystem.Business.Common.Exceptions.ApplicationExceptions;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.TechnicalInspectionBusiness;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.VehicleBusiness;

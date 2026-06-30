@@ -16,7 +16,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<bool> AnyUserWithThisUserNameAsync(string userName) => await AnyAsync(u => u.UserName == userName);
 
-    public async Task<bool> CheckUserHasPasswordAsync(int userId) => await AnyAsync(u => u.Id == userId && u.Password != null);
+    public async Task<bool> CheckUserHasPasswordAsync(int userId) => await AnyAsync(u => u.Id == userId && u.IsPasswordNotNull());
 
     public async Task<User?> GetUserByPhoneNumberAsync(string phoneNumber) => await Entities.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
@@ -31,7 +31,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
         user.UpdatePasswordAndUserName(userName, password);
 
-        return await DbContext.SaveChangesAsync() > 0;
+        return DbContext.Entry(user).State == EntityState.Modified;
     }
 }
 

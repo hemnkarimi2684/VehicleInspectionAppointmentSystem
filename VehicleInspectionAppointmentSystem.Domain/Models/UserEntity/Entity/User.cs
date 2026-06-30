@@ -20,7 +20,7 @@ public class User : BaseEntity
         LastName = lastName;
         NationalCode = nationalCode;
         FatherName = fatherName;
-        Password = password;
+        _password = password;
         PhoneNumber = phoneNumber;
         BirthDate = birthDate;
 
@@ -42,7 +42,7 @@ public class User : BaseEntity
     //Has Default Value
     public string UserName { get; private set; }
 
-    public string? Password { get; private set; }
+    private string? _password;
 
     public string PhoneNumber { get; private set; }
 
@@ -55,11 +55,11 @@ public class User : BaseEntity
 
     protected override void Validate()
     {
-        if ((!string.IsNullOrWhiteSpace(FirstName) && FirstName.Length > 120 || FirstName.Length < 0) ||
-            (!string.IsNullOrWhiteSpace(LastName) && LastName.Length > 120 || LastName.Length < 0))
+        if ((!string.IsNullOrWhiteSpace(FirstName) && FirstName?.Length > 120 || FirstName?.Length < 0) ||
+            (!string.IsNullOrWhiteSpace(LastName) && LastName?.Length > 120 || LastName?.Length < 0))
             throw new DomainException(DomainErrors.InvalidUserFirstNameOrLastNameLength);
 
-        if (!string.IsNullOrWhiteSpace(FatherName) && FatherName.Length > 120 || FatherName.Length < 0)
+        if (!string.IsNullOrWhiteSpace(FatherName) && FatherName?.Length > 120 || FatherName?.Length < 0)
             throw new DomainException(DomainErrors.InvalidUserFatherNameLength);
 
         ValidatePhoneNumber();
@@ -132,7 +132,7 @@ public class User : BaseEntity
         StrongPasswordPolicy.Validate(userName, password);
         ValidateUserName(userName); 
 
-        Password = password;
+        _password = password;
         UserName = userName;
     }
 
@@ -154,6 +154,10 @@ public class User : BaseEntity
         NationalCode = nationalCode;
         FatherName = fatherName;
     }
+
+    public bool IsPasswordRight(string password) => _password == password;
+
+    public bool IsPasswordNotNull() => _password != null;
 
 
 }

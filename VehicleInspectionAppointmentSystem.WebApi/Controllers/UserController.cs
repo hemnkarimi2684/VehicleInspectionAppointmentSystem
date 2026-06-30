@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VehicleInspectionAppointmentSystem.Business.Interfaces.UserBusiness;
+using VehicleInspectionAppointmentSystem.Business.RequestDto.UserDto;
 using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Dto;
 using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
@@ -31,6 +32,30 @@ public class UserController : ControllerBase
         var user = await _userService.GetUserByUserNameAsync(userName);
 
         return Ok(Result<UserResponseDto>.Success(user));
+    }
+
+    [HttpPut("{userId:int}")]
+    public async Task<ActionResult<bool>> UpdateCredentialsAsync([FromRoute] int userId,[FromBody] UpdateUserRequestDto updateUserRequest)
+    {
+        var result = await _userService.UpdateCredentialsAsync(userId,updateUserRequest);
+
+        return Ok(Result<bool>.Success(result));
+    }
+
+    [HttpPost("register")]
+    public async Task<ActionResult<bool>> RegisterAsync([FromBody] CreateUserRequestDto createUserRequest)
+    {
+        var result = await _userService.RegisterAsync(createUserRequest);
+
+        return Ok(Result<bool>.Success(result));
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<bool>> LoginAsync(LoginUserRequestDto loginUserRequestDto)
+    {
+        var result = await _userService.LoginAsync(loginUserRequestDto);
+
+        return Ok(Result<bool>.Success(result));
     }
 
     //[HttpGet]

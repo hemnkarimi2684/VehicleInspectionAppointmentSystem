@@ -75,6 +75,11 @@ public static class DomainErrors
     public static Error UserNameIsRequired => new Error("Your user nam cannot be empty", "user.required_userName");
     public static Error InvalidUserNameLength => new Error("Your user name must be at least 3 characters long or Shorter than 20 characters.", "user.invalid_userName_length");
     public static Error UserNameHasSymbol => new Error("the user name cannot have any symbol", "user.invalid_userName_format");
+    public static Error PasswordCannotEqualsWithUserName => new Error("the password cannot be equals with userName", "user.invalid_password");
+    public static Error PasswordDontHaveAtLeastUpperCaseLetter => new Error("the password must have one upperCase letter", "user.invalid_password_lowerCase");
+    public static Error PasswordDontHaveAtLeastLowerCaseLetter => new Error("the password must have one LowerCase letter", "user.invalid_password_UpperCase");
+    public static Error PasswordDontHaveAtLeastOneDigit => new Error("the password must have one digit at least", "user.invalid_password_digit");
+    public static Error PasswordDontHaveAtLeastOneSymbol => new Error("the password must have one symbol at least", "user.invalid_password_symbol");
     #endregion
 
     #region Vehicle Errors
