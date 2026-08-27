@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.RequestDto.AppointmentDto;
-using VehicleInspectionAppointmentSystem.Contracts.RequestDto.PaginationDto;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.AppointmentDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.AppointmentBusiness;
+using VehicleInspectionAppointmentSystem.Business.RequestDto.AppointmentDto;
+using VehicleInspectionAppointmentSystem.Business.RequestDto.PaginationDto;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
+using VehicleInspectionAppointmentSystem.WebApi.Filters;
+using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
+
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 
@@ -18,23 +21,28 @@ public class AppointmentController : ControllerBase
     }
 
     [HttpPost]
+    [RequestModelValidationFilter]
     public async Task<IActionResult> RegisterAppointmentAsync([FromBody] AppointmentCreateRequestDto appointmentCreateDto)
     {
-        var result = await _appointmentService.CreateAppointmentAsync(appointmentCreateDto);
+        await _appointmentService.CreateAppointmentAsync(appointmentCreateDto);
 
-        if (!result)
-            return BadRequest("Somthing went wrong when register the appointment plaese try again!");
-
-        return Created();
+        return Ok(Result.Success());
     }
 
     [HttpGet("vehicle/{vehicleId:int}")]
-    public async Task<ActionResult<List<AppointmentDetailsResponseDto>>> GetVehicleAppointmentsAsync([FromRoute] int vehicleId) => Ok(await _appointmentService.GetVehicleAppointmentsAsync(vehicleId));
+    public async Task<ActionResult<List<AppointmentDetailsResponseDto>>> GetVehicleAppointmentsAsync([FromRoute] int vehicleId)
+    {
+        var vehicleAppointments = await _appointmentService.GetVehicleAppointmentsAsync(vehicleId);
+
+        return Ok(Result<List<AppointmentDetailsResponseDto>>.Success(vehicleAppointments));
+    }
 
     [HttpGet]
     public async Task<ActionResult<ActionResult<List<AppointmentDetailsResponseDto>>>> GetAllWithPaginationAsync([FromQuery] PaginationRequestDto paginationRequest)
     {
-        return Ok(await _appointmentService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize));
+        var appointments = await _appointmentService.GetAllWithPaginationAsync(paginationRequest.Page, paginationRequest.PageSize);
+
+        return Ok(Result<List<AppointmentDetailsResponseDto>>.Success(appointments));
     }
 
     //[HttpGet]

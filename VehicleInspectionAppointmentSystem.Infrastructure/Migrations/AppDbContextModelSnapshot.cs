@@ -924,10 +924,6 @@ namespace VehicleInspectionAppointmentSystem.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("Password")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(11)
@@ -944,11 +940,14 @@ namespace VehicleInspectionAppointmentSystem.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("_password")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)")
+                        .HasColumnName("Password");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedAt");
-
-                    b.HasIndex("Password");
 
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
@@ -1063,7 +1062,6 @@ namespace VehicleInspectionAppointmentSystem.Infrastructure.Migrations
                             FirstName = "Admin",
                             LastName = "System",
                             NationalCode = "1234567898",
-                            Password = "Admin@12345",
                             PhoneNumber = "09123000009",
                             Role = 1,
                             UserName = "admin"

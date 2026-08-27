@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
 using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
@@ -42,16 +44,16 @@ public class TimeSlot : BaseEntity
     protected override void Validate()
     {
         if (TimeSlotDate < DateTime.UtcNow)
-            throw new InvalidOperationException("invalid TimeSlotDate of Time Slot! the reserved date cannot be in the past");
+            throw new DomainException(DomainErrors.InvalidTiemSlotDateTimeRange);
 
         if (StartTime.Hour < 1 || StartTime.Hour > 18 || StartTime.Minute != 00 && StartTime.Minute != 30)
-            throw new InvalidOperationException("Invalid start time. Allowed hours are between 01:00 and 18:00, and minutes must be either 00 or 30.");
+            throw new DomainException(DomainErrors.InvalidTiemSlotStartTimeRange);
 
         if (CenterId < 1)
-            throw new InvalidOperationException("invalid centerId input! the center id cannot be negative");
+            throw new DomainException(DomainErrors.InvalidTimeSLotCenterIdRange);
 
         if (Capacity < 1)
-            throw new InvalidOperationException("invalid Capacity input! the Capacity cannot be negative");
+            throw new DomainException(DomainErrors.InvalidTimeSlotCapacityRange);
     }
 
     private void SetEndTime() => EndTime = StartTime.AddMinutes(30);

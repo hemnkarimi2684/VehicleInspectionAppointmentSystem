@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using VehicleInspectionAppointmentSystem.Domain.Models.CenterEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 
@@ -11,7 +12,7 @@ public interface ICenterRepository : IGenericRepository<Center>
     /// </summary>
     /// <param name="cityId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetActiveCentersOfCityAsync<TResult>(Expression<Func<Center, TResult>> selector, int cityId);
+    Task<List<CenterResponseDto>> GetActiveCentersOfCityAsync(int cityId);
 
     /// <summary>
     /// بررسی اینکه مرکز میتواند تایم زمان دیگری داشته باشد یا نه

@@ -1,4 +1,6 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.Centers.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Entity;
 
@@ -32,22 +34,21 @@ public class City : BaseEntity
 
     public virtual ICollection<Center> Centers { get; private set; } = new List<Center>();
 
-
     protected override void Validate()
     {
         if (CityCode < 1)
-            throw new InvalidOperationException("invalid CityCode!");
+            throw new DomainException(DomainErrors.InvalidCityCodeRange);
 
         if (ProvinceCode < 1)
-            throw new InvalidOperationException("invalid ProvinceCode!");
+            throw new DomainException(DomainErrors.InvalidCityProvinceCodeRange);
 
         if (string.IsNullOrWhiteSpace(Name))
-            throw new ArgumentNullException("the city name cannot be null");
+            throw new DomainException(DomainErrors.CityNameIsRequired);
 
         if (Name.Length < 2 || Name.Length > 120)
-            throw new InvalidOperationException("the name length cannot be less than 2 or higher than 120");
+            throw new DomainException(DomainErrors.InvalidCityNameLength);
 
         if (ProvinceId < 1)
-            throw new InvalidOperationException("invalid proviceId! the provice id cannot be negative");
+            throw new DomainException(DomainErrors.InvalidCityProvinceIdRange);
     }
 }

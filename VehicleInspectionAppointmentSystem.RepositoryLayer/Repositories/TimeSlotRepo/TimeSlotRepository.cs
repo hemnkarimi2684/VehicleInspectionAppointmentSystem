@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
-using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.TimeSlotRepo;
 
@@ -17,12 +15,18 @@ public class TimeSlotRepository : GenericRepository<TimeSlot>, ITimeSlotReposito
 
     public async Task<bool> CheckTimeSlotIsReservedAsync(int timeSlotId) => await AnyAsync(ts => ts.Id == timeSlotId && ts.IsReserved);
 
-    public async Task<List<TResult>> GetCenterAvailableTimeSlotsAsync<TResult>(Expression<Func<TimeSlot, TResult>> selector, int centerId)
+    public async Task<List<TimeSlotResponseDto>> GetCenterAvailableTimeSlotsAsync(int centerId)
     {
         return await Entities
                             .AsNoTracking()
                             .Where(ts => ts.CenterId == centerId && !ts.IsReserved)
-                            .Select(selector)
+                            .Select(ts => new TimeSlotResponseDto
+                            (
+                                ts.Id,
+                                ts.StartTime,
+                                ts.EndTime,
+                                ts.Capacity
+                            ))
                             .ToListAsync();
     }
 

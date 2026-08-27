@@ -1,4 +1,6 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Entity;
@@ -25,12 +27,12 @@ public class Province : BaseEntity
     protected override void Validate()
     {
         if (ProvinceCode < 1)
-            throw new InvalidOperationException("invalid ProvinceCode!");
+            throw new DomainException(DomainErrors.InvalidProvinceCodeRange);
 
         if (string.IsNullOrWhiteSpace(Name))
-            throw new ArgumentNullException("the Province name cannot be null");
+            throw new DomainException(DomainErrors.ProvinceNameIsRequired);
 
         if (Name.Length < 2 || Name.Length > 150)
-            throw new InvalidOperationException("the name length cannot be less than 2 or higher than 150");
+            throw new DomainException(DomainErrors.InvalidProvinceNameLength);
     }
 }

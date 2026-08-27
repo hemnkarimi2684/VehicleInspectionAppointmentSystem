@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Entity;
 
 namespace VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Data;
@@ -20,5 +21,5 @@ public interface ITechnicalInspectionRepository : IGenericRepository<TechnicalIn
     /// <param name="selector"></param>
     /// <param name="vehicleId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetVehicleTechnicalInspectionAsync<TResult>(Expression<Func<TechnicalInspection, TResult>> selector, int vehicleId);
+    Task<List<TechnicalInspectionResponseDto>> GetVehicleTechnicalInspectionAsync(int vehicleId);
 }

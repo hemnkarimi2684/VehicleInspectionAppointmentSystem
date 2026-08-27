@@ -1,4 +1,6 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.Appointments.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Entity;
@@ -62,52 +64,55 @@ public class Vehicle : BaseEntity
     protected override void Validate()
     {
         if (string.IsNullOrWhiteSpace(Name))
-            throw new ArgumentNullException("the car name cannot be null");
+            throw new DomainException(DomainErrors.VehicleNameIsRequired);
 
         if (Name.Length < 2 || Name.Length > 100)
-            throw new InvalidOperationException("the name length cannot be less than 2 or higher than 100");
+            throw new DomainException(DomainErrors.InvalidVehicleNameLength);
 
         if (string.IsNullOrWhiteSpace(Vin))
-            throw new ArgumentNullException("the vin cannot be null");
+            throw new DomainException(DomainErrors.VehicleVinIsRequired);
 
         if (Vin.Length != 17)
-            throw new InvalidOperationException("invalid vin! the vin length must be 17");
+            throw new DomainException(DomainErrors.InvalidVehicleVinLength);
 
         if (Vin.Any(char.IsSymbol))
-            throw new InvalidOperationException("invalid vin! vin have symbol");
+            throw new DomainException(DomainErrors.VehicleVinHasSymbol);
 
         if(string.IsNullOrWhiteSpace(Plate))
-            throw new ArgumentNullException("the Plate cannot be null");
+            throw new DomainException(DomainErrors.VehiclePlateIsRequired);
 
         if(Plate.Length != 8)
-            throw new InvalidOperationException("the Plate length must be 8 characters!");
+            throw new DomainException(DomainErrors.InvalidVehiclePlateLength);
 
         if(!Plate.Any(char.IsLetter))
-            throw new InvalidOperationException("the Plate must have one letter in between the numbers like 11 .. 111 11");
+            throw new DomainException(DomainErrors.InvalidVehiclePlateFormat);
 
         if(!Plate.Any(char.IsDigit))
-            throw new InvalidOperationException("the Plate must have numbers like 11 .. 111 11");
+            throw new DomainException(DomainErrors.VehiclePlateDontHaveDigit);
+
+        if (Plate.Any(char.IsSymbol))
+            throw new DomainException(DomainErrors.VehiclePlateHasSymbol);
 
         if (string.IsNullOrWhiteSpace(Brand))
-            throw new ArgumentNullException("the brand name cannot be null");
+            throw new DomainException(DomainErrors.VehicleBrandIsRequired);
 
         if (Brand.Length < 2 || Brand.Length > 120)
-            throw new InvalidOperationException("the brand name length cannot be less than 2 or higher than 120");
+            throw new DomainException(DomainErrors.InvalidVehicleBrandLength);
 
         if (!string.IsNullOrWhiteSpace(Color) && Color.Length < 0 || Color.Length > 100)
-            throw new InvalidOperationException("the brand name length cannot be less than 1 or higher than 100");
+            throw new DomainException(DomainErrors.InvalidVehicleColorLength);
 
         if (ProductionYear < 0 || ProductionYear > DateTime.UtcNow.Year)
-            throw new InvalidTimeZoneException("invalid production year!");
+            throw new DomainException(DomainErrors.InvalidVehicleProductionYear);
 
         if (string.IsNullOrWhiteSpace(ManufacturerCompany))
-            throw new ArgumentNullException("the ManufacturerCompany cannot be null");
+            throw new DomainException(DomainErrors.VehicleManufacturerCompanyIsRequired);
 
         if (ManufacturerCompany.Length < 2 || ManufacturerCompany.Length > 150)
-            throw new InvalidOperationException("the ManufacturerCompany cannot be less than 2 or higher than 150");
+            throw new DomainException(DomainErrors.InvalidVehicleManufacturerCompanyLength);
 
         if (UserId < 1)
-            throw new InvalidOperationException("invalid userId! the user id cannot be negative");
+            throw new DomainException(DomainErrors.InvalidVehicleUserIdRange);
     }
 
     public void UpdateColor(string color) => Color = color;

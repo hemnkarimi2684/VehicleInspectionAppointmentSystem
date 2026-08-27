@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Data;
+using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.CityRepo;
 
@@ -13,12 +14,18 @@ public class CityRepository : GenericRepository<City>, ICityRepository
     {
     }
 
-    public async Task<List<TResult>> GetCitiesByProvinceIdAsync<TResult>(Expression<Func<City, TResult>> selector, int provinceId)
+    public async Task<List<CityResponseDto>> GetCitiesByProvinceIdAsync(int provinceId)
     {
         return await Entities
                           .AsNoTracking()
                           .Where(c => c.ProvinceId == provinceId)
-                          .Select(selector)
+                          .Select(c => new CityResponseDto
+                          (
+                              c.Id,
+                              c.Name,
+                              c.CityCode,
+                              c.ProvinceCode
+                          ))
                           .ToListAsync();
     }
 }

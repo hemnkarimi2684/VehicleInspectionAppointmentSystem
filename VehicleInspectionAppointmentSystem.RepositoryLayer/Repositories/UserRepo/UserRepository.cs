@@ -2,7 +2,7 @@
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Data;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Entity;
 using VehicleInspectionAppointmentSystem.Infrastructure.Common;
-using VehicleInspectionAppointmentSystem.RepositoryLayer.CommonRepository;
+using VehicleInspectionAppointmentSystem.RepositoryLayer.Common;
 
 namespace VehicleInspectionAppointmentSystem.RepositoryLayer.Repositories.UserRepo;
 
@@ -16,7 +16,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<bool> AnyUserWithThisUserNameAsync(string userName) => await AnyAsync(u => u.UserName == userName);
 
-    public async Task<bool> CheckUserHasPasswordAsync(int userId) => await AnyAsync(u => u.Id == userId && u.Password != null);
+    public async Task<bool> CheckUserHasPasswordAsync(int userId) => await AnyAsync(u => u.Id == userId && u.IsPasswordNotNull());
 
     public async Task<User?> GetUserByPhoneNumberAsync(string phoneNumber) => await Entities.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
@@ -31,7 +31,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
         user.UpdatePasswordAndUserName(userName, password);
 
-        return await DbContext.SaveChangesAsync() > 0;
+        return DbContext.Entry(user).State == EntityState.Modified;
     }
 }
 

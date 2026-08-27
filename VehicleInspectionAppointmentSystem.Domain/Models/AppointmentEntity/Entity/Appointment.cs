@@ -1,4 +1,6 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TechnicalInspectionEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.TimeSlotEntity.Entity;
@@ -40,12 +42,12 @@ public class Appointment : BaseEntity
     protected override void Validate()
     {
         if (Amount < 0)
-            throw new InvalidOperationException("invalid amount! the amount cannot be negative");
+            throw new DomainException(DomainErrors.InvalidAppointmentAmountRange);
 
         if (VehicleId < 1)
-            throw new InvalidOperationException("invalid vehicleId! cannot be negative");
+            throw new DomainException(DomainErrors.InvalidAppointmentVehicleIdRange);
 
         if (TimeSlotId < 1)
-            throw new InvalidOperationException("invalid vehicleId! cannot be negative");
+            throw new DomainException(DomainErrors.InvalidAppointmentTimeSlotIdRange);
     }
 }

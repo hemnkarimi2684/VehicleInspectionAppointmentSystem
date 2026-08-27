@@ -1,4 +1,6 @@
-﻿using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.DomainExceptions;
+using VehicleInspectionAppointmentSystem.Domain.Models.Common.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Enums;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.Exceptions;
 using VehicleInspectionAppointmentSystem.Domain.Models.UserEntity.PasswordPolicy;
@@ -18,7 +20,7 @@ public class User : BaseEntity
         LastName = lastName;
         NationalCode = nationalCode;
         FatherName = fatherName;
-        Password = password;
+        _password = password;
         PhoneNumber = phoneNumber;
         BirthDate = birthDate;
 
@@ -40,7 +42,7 @@ public class User : BaseEntity
     //Has Default Value
     public string UserName { get; private set; }
 
-    public string? Password { get; private set; }
+    private string? _password;
 
     public string PhoneNumber { get; private set; }
 
@@ -53,19 +55,19 @@ public class User : BaseEntity
 
     protected override void Validate()
     {
-        if ((!string.IsNullOrWhiteSpace(FirstName) && FirstName.Length > 120 || FirstName.Length < 0) ||
-            (!string.IsNullOrWhiteSpace(LastName) && LastName.Length > 120 || LastName.Length < 0))
-            throw new TooShortLengthException("Your first name or last name cannot be higer than 120 characters or less than 0.");
+        if ((!string.IsNullOrWhiteSpace(FirstName) && FirstName?.Length > 120 || FirstName?.Length < 0) ||
+            (!string.IsNullOrWhiteSpace(LastName) && LastName?.Length > 120 || LastName?.Length < 0))
+            throw new DomainException(DomainErrors.InvalidUserFirstNameOrLastNameLength);
 
-        if (!string.IsNullOrWhiteSpace(FatherName) && FatherName.Length > 120 || FatherName.Length < 0)
-            throw new InvalidOperationException("Your father name cannot be higer than 120 characters or less than 0.");
+        if (!string.IsNullOrWhiteSpace(FatherName) && FatherName?.Length > 120 || FatherName?.Length < 0)
+            throw new DomainException(DomainErrors.InvalidUserFatherNameLength);
 
         ValidatePhoneNumber();
 
         if (BirthDate is not null)
         {
             if (BirthDate.Value > DateTime.UtcNow.AddYears(-18))
-                throw new InvalidAgeException("invalid age! you must be Adult");
+                throw new DomainException(DomainErrors.InvalidUserBirthDateRange);
         }
 
         if (NationalCode is not null)
@@ -75,25 +77,25 @@ public class User : BaseEntity
     private void ValidatePhoneNumber()
     {
         if (string.IsNullOrWhiteSpace(PhoneNumber))
-            throw new ArgumentNullException("your phone number cannot be null or empty");
+            throw new DomainException(DomainErrors.UserPhoneNumberIsRequired);
 
         if (PhoneNumber.Length != 11)
-            throw new InvalidPhoneNumberLengthException();
+            throw new DomainException(DomainErrors.InvalidUserPhoneNumberLength);
 
         if (!PhoneNumber.All(char.IsDigit))
-            throw new InvalidPhoneNumberException();
+            throw new DomainException(DomainErrors.UserPhoneNumberIsDigit);
     }
 
     private void ValidateUserName(string userName)
     {
         if (string.IsNullOrWhiteSpace(UserName))
-            throw new InvalidOperationException("Your user nam cannot be empty");
+            throw new DomainException(DomainErrors.UserNameIsRequired);
 
         if (userName.Length < 3 || userName.Length > 20)
-            throw new InvalidUserNameLengthException();
+            throw new DomainException(DomainErrors.InvalidUserNameLength);
 
         if (userName.Any(char.IsSymbol))
-            throw new InvalidUserNameSymbolException();
+            throw new DomainException(DomainErrors.UserNameHasSymbol);
     }
 
     private void SetUserNameByDefault() => UserName = PhoneNumber;
@@ -101,13 +103,13 @@ public class User : BaseEntity
     private void ValidateNationalCode(string nationalCode)
     {
         if (string.IsNullOrWhiteSpace(nationalCode))
-            throw new ArgumentNullException("your NationalCode cannot be null or empty");
+            throw new DomainException(DomainErrors.UserNationalCodeIsRequired);
 
         if (nationalCode.Length != 10)
-            throw new InvalidOperationException("the national code length is less or higher than 10 characters");
+            throw new DomainException(DomainErrors.InvalidUserNationalCodeLength);
 
         if (!nationalCode.All(char.IsDigit))
-            throw new InvalidOperationException("for thee national code all characters must be digit");
+            throw new DomainException(DomainErrors.UserNationalCodeDontHaveDigit);
     }
 
     private void FixPhoneNumberFormat()
@@ -130,7 +132,7 @@ public class User : BaseEntity
         StrongPasswordPolicy.Validate(userName, password);
         ValidateUserName(userName); 
 
-        Password = password;
+        _password = password;
         UserName = userName;
     }
 
@@ -140,10 +142,10 @@ public class User : BaseEntity
     {
         if ((string.IsNullOrWhiteSpace(firstName) && firstName.Length > 120 || firstName.Length < 0) ||
             (string.IsNullOrWhiteSpace(lastName) && lastName.Length > 120 || lastName.Length < 0))
-            throw new TooShortLengthException("Your first name or last name cannot be null or higer than 120 characters or less than 0.");
+            throw new DomainException(DomainErrors.InvalidUserFirstNameOrLastNameLength);
 
         if (string.IsNullOrWhiteSpace(fatherName) && fatherName.Length > 120 || fatherName.Length < 0)
-            throw new InvalidOperationException("Your father name cannot be null or higer than 120 characters or less than 0.");
+            throw new DomainException(DomainErrors.InvalidUserFatherNameLength);
 
         ValidateNationalCode(nationalCode);
 
@@ -152,6 +154,10 @@ public class User : BaseEntity
         NationalCode = nationalCode;
         FatherName = fatherName;
     }
+
+    public bool IsPasswordRight(string password) => _password == password;
+
+    public bool IsPasswordNotNull() => _password != null;
 
 
 }

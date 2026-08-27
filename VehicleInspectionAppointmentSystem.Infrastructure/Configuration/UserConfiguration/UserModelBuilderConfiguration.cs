@@ -25,10 +25,9 @@ public class UserModelBuilderConfiguration : BaseModelBuilderConfiguration<User>
         builder.Property(u => u.UserName)
             .HasMaxLength(20);
 
-        builder.Property(u => u.Password)
+        builder.Property<string>("_password")
+            .HasColumnName("Password")
             .HasMaxLength(60);
-
-        builder.HasIndex(u => u.Password);  
 
         builder.Property(u => u.PhoneNumber)
             .IsRequired()

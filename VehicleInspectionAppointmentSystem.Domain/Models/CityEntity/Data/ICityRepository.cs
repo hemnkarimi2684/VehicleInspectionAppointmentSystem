@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Dto;
 using VehicleInspectionAppointmentSystem.Domain.Models.CityEntity.Entity;
 using VehicleInspectionAppointmentSystem.Domain.Models.Common.Data;
 
@@ -11,5 +12,5 @@ public interface ICityRepository : IGenericRepository<City>
     /// </summary>
     /// <param name="provinceId"></param>
     /// <returns></returns>
-    Task<List<TResult>> GetCitiesByProvinceIdAsync<TResult>(Expression<Func<City, TResult>> selector, int provinceId);
+    Task<List<CityResponseDto>> GetCitiesByProvinceIdAsync(int provinceId);
 }

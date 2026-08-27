@@ -1,0 +1,15 @@
+﻿using VehicleInspectionAppointmentSystem.Domain.Common.ErrorModel;
+using VehicleInspectionAppointmentSystem.Domain.Common.Exceptions.Unity;
+
+namespace VehicleInspectionAppointmentSystem.Business.Common.Exceptions.Unity;
+
+public abstract class AppException : BaseException
+{
+    public AppException(string message, string statusCode, Exception innerException) : base(message, $"BusinessException_{statusCode}", innerException)
+    {
+    }
+
+    public AppException(Error error, Exception? innerException = null) : base(error.Message, error.StatusCode, innerException)
+    {
+    }
+}

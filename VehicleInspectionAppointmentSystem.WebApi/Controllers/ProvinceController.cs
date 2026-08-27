@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VehicleInspectionAppointmentSystem.Contracts.ResponseDto.ProvinceDto;
-using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Service;
+using VehicleInspectionAppointmentSystem.Business.Interfaces.ProvinceBusiness;
+using VehicleInspectionAppointmentSystem.Domain.Models.AppointmentEntity.Dto;
+using VehicleInspectionAppointmentSystem.Domain.Models.ProvinceEntity.Dto;
+using VehicleInspectionAppointmentSystem.WebApi.ResultPattern;
 
 namespace VehicleInspectionAppointmentSystem.WebApi.Controllers;
 
@@ -16,6 +18,11 @@ public class ProvinceController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<ProvinceResponseDto>>> GetAllAsync() => Ok(await _provinceService.GetAllProvinceAsync());
+    public async Task<ActionResult<List<ProvinceResponseDto>>> GetAllAsync()
+    {
+        var provinces = await _provinceService.GetAllProvinceAsync();
+
+        return Ok(Result<List<ProvinceResponseDto>>.Success(provinces));
+    }
 
 }
